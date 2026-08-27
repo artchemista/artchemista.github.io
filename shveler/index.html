@@ -1,6 +1,6 @@
 <!doctype html><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Рампа з язиком</title>
+<title>Швелер</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root{
@@ -56,10 +56,6 @@ ul.cond{margin:0;padding:0 15px 14px 34px;display:flex;flex-direction:column;gap
         font-size:16.5px;color:var(--ink-2)}
 ul.cond li::marker{color:var(--bend)}
 ul.cond b{color:var(--ink)}
-.grid2{display:grid;grid-template-columns:1fr 1fr}
-.grid2>.part{border-right:0}
-.grid2>.part:last-child{border-right:1px solid var(--rule)}
-@media (max-width:640px){.grid2{grid-template-columns:1fr}.grid2>.part{border-right:1px solid var(--rule);border-bottom:0}.grid2>.part:last-child{border-bottom:1px solid var(--rule)}}
 text{font-family:var(--f-mono);font-size:13.5px;fill:var(--dim)}
 text.big{font-size:15px;fill:var(--ink);font-weight:600}
 text.bnd{fill:var(--bend);font-weight:600}
@@ -67,24 +63,23 @@ text.bnd{fill:var(--bend);font-weight:600}
 .bl{stroke:var(--bend);stroke-width:2.2;stroke-dasharray:9 5;fill:none}
 .dimline{stroke:var(--dim);stroke-width:.9}
 .ctr{stroke:var(--rule-2);stroke-width:.8;stroke-dasharray:12 4 3 4}
-.gh{fill:none;stroke:var(--ghost);stroke-width:1.4;stroke-dasharray:7 4}
 </style>
 
 <div class="sheet">
 
 <header style="display:flex;flex-direction:column;gap:10px">
   <div class="meta">Замовлення на різку · швелер · 2026-08-27</div>
-  <h1>Рампа з язиком</h1>
-  <p class="lede">Два відрізки гнутого швелера 160 × 60 × 2. Один просто в розмір,
-     другий із язиком: на ньому зрізають полиці й відгинають спинку. Обидва по 1850. Розміри в міліметрах.</p>
+  <h1>Швелер</h1>
+  <p class="lede">Два відрізки гнутого швелера 160 × 60 × 2, обидва по 1850.
+     Ш1 — просто в розмір. Ш2 — з язиком. Розміри в міліметрах.</p>
   <div class="legend">
     <span><span class="sw"></span><b>суцільна</b> — лінія різу</span>
     <span><span class="sw b"></span><b>штрихова помаранчева</b> — <b>лінія згину: по ній гнуть, не ріжуть</b></span>
-    <span><b>торці перпендикулярні до осі</b>, крім зрізу полиць</span>
   </div>
   <div class="legend hi">
-    <span><b>Довжина ±1</b>, положення лінії згину <b>±1</b></span>
-    <span><b>Кут згину 13,5°</b>, допуск ±0,5°</span>
+    <span><b>Довжина ±1</b>, лінія згину <b>±1</b></span>
+    <span><b>Кут згину 13,5° ±0,5°</b></span>
+    <span><b>Торці перпендикулярні</b>, крім зрізу полиць</span>
     <span><b>Обрізки повернути</b></span>
   </div>
 </header>
@@ -92,90 +87,14 @@ text.bnd{fill:var(--bend);font-weight:600}
 <table class="list">
   <thead><tr><th>№</th><th>Профіль</th><th class="n">Довжина</th><th class="n">Шт</th><th>Що робити</th></tr></thead>
   <tbody>
-    <tr><td class="id">Ш1</td><td>швелер 160 × 60 × 2</td><td class="n">1850</td><td class="n">1</td><td>різати в розмір, більше нічого</td></tr>
-    <tr><td class="id">Ш2</td><td>швелер 160 × 60 × 2</td><td class="n">1850</td><td class="n">1</td><td><b>різати в розмір + язик</b>: зрізати полиці, звузити спинку, відігнути</td></tr>
+    <tr><td class="id">Ш1</td><td>швелер 160 × 60 × 2</td><td class="n">1850</td><td class="n">1</td><td>тільки різати в розмір</td></tr>
+    <tr><td class="id">Ш2</td><td>швелер 160 × 60 × 2</td><td class="n">1850</td><td class="n">1</td><td>різати в розмір, зрізати полиці, звузити спинку, відігнути</td></tr>
   </tbody>
 </table>
 
 <section class="part">
-  <div class="part-head"><span class="id">Ш2</span><span>швелер 160 × 60 × 2</span><span class="qty">1 шт</span><span>вид збоку · язик праворуч</span></div>
-  <div class="draw"><svg viewBox="0 0 1060 160" role="img" aria-label="Швелер завдовжки 1850 до згину: на останніх 65 полиці зрізані, лишається сама спинка, зріз полиці нахилений">
-    <path class="out" d="M58 76 L983 76 L983 75 L941 75 L948 46 L58 46 Z"/>
-    <line class="bl" x1="950.5" y1="82" x2="950.5" y2="40"/>
-    <text class="bnd" x="950.5" y="34" text-anchor="middle">згин 13,5°</text>
-    <line class="dimline" x1="58" y1="28" x2="983" y2="28"/>
-    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
-    <line class="dimline" x1="983" y1="22" x2="983" y2="34"/>
-    <text class="big" x="520.5" y="21" text-anchor="middle">1850</text>
-    <line class="dimline" x1="58" y1="112" x2="950.5" y2="112"/>
-    <line class="dimline" x1="58" y1="106" x2="58" y2="118"/>
-    <line class="dimline" x1="950.5" y1="106" x2="950.5" y2="118"/>
-    <text class="big" x="504.2" y="105" text-anchor="middle">1785</text>
-    <line class="dimline" x1="950.5" y1="136" x2="983" y2="136"/>
-    <line class="dimline" x1="950.5" y1="130" x2="950.5" y2="142"/>
-    <line class="dimline" x1="983" y1="130" x2="983" y2="142"/>
-    <text class="big" x="966.8" y="129" text-anchor="middle">65</text>
-    <line class="dimline" x1="36" y1="46" x2="36" y2="76"/>
-    <line class="dimline" x1="30" y1="46" x2="42" y2="46"/>
-    <line class="dimline" x1="30" y1="76" x2="42" y2="76"/>
-    <text class="big" x="29" y="61" text-anchor="middle" transform="rotate(-90 29 61)">60</text>
-  </svg></div>
-  <ul class="cond">
-    <li><b>На останніх 65 обидві полиці зрізаються повністю</b>, лишається сама спинка 2 мм.</li>
-    <li>🔴 <b>Зріз полиць нахилений саме в цей бік:</b> верхня кромка кінчається за <b>5</b> до лінії згину, нижня за <b>18,9</b>. Нахил <b>13,9 мм</b> на висоту полиці 58.</li>
-    <li>Нахил обов'язковий: деталь працює під цим самим кутом, і торець полиці має вийти прямовисним. Зрізаний в інший бік — не годиться.</li>
-    <li><b>Згин по лінії 1785, кут 13,5°.</b> На цьому кресленні деталь показана <b>до згину</b>.</li>
-  </ul>
-</section>
-
-<section class="part">
-  <div class="part-head"><span class="id">Ш2</span><span>язик після згину</span><span class="qty">вид збоку</span><span>так він має виглядати</span></div>
-  <div class="draw"><svg viewBox="0 0 470 205" role="img" aria-label="Язик після згину: спинка йде прямо, останні 65 відігнуті вниз на 13,5 градуса">
-    <path class="out" d="M58 100 L258 100 L258 104 L58 104 Z"/>
-    <path class="out" d="M258 100 L384.4 130.4 L383.5 134.3 L258 104 Z"/>
-    <line class="ctr" x1="258" y1="100" x2="420" y2="100"/>
-    <line class="bl" x1="258" y1="80" x2="258" y2="150"/>
-    <text class="bnd" x="258" y="74" text-anchor="middle">лінія згину</text>
-    <text class="bnd" x="330" y="96" text-anchor="middle">13,5° униз</text>
-    <line class="dimline" x1="58" y1="70" x2="258" y2="70"/>
-    <line class="dimline" x1="58" y1="64" x2="58" y2="76"/>
-    <line class="dimline" x1="258" y1="64" x2="258" y2="76"/>
-    <text class="big" x="158" y="63" text-anchor="middle">спинка рампи</text>
-    <line class="dimline" x1="266" y1="160" x2="392" y2="190"/>
-    <text class="big" x="329" y="188" text-anchor="middle">65</text>
-  </svg></div>
-  <ul class="cond">
-    <li><b>Гнути в бік спинки</b>, тобто геть від полиць. Решта 1785 лишається прямою.</li>
-  </ul>
-</section>
-
-<section class="part">
-  <div class="part-head"><span class="id">Ш2</span><span>язик</span><span class="qty">вид на спинку</span></div>
-  <div class="draw"><svg viewBox="0 0 480 300" role="img" aria-label="Вид на спинку з боку язика: ширина 160 звужується до 150 на останніх 65">
-    <path class="out" d="M58 46 L378 46 L378 176 L368 176 L368 306 L68 306 L68 176 L58 176 Z"/>
-    <line class="bl" x1="52" y1="176" x2="384" y2="176"/>
-    <text class="bnd" x="218" y="168" text-anchor="middle">лінія згину</text>
-    <line class="dimline" x1="58" y1="28" x2="378" y2="28"/>
-    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
-    <line class="dimline" x1="378" y1="22" x2="378" y2="34"/>
-    <text class="big" x="218" y="21" text-anchor="middle">160</text>
-    <line class="dimline" x1="68" y1="330" x2="368" y2="330"/>
-    <line class="dimline" x1="68" y1="324" x2="68" y2="336"/>
-    <line class="dimline" x1="368" y1="324" x2="368" y2="336"/>
-    <text class="big" x="218" y="323" text-anchor="middle">150</text>
-    <line class="dimline" x1="404" y1="176" x2="404" y2="306"/>
-    <line class="dimline" x1="398" y1="176" x2="410" y2="176"/>
-    <line class="dimline" x1="398" y1="306" x2="410" y2="306"/>
-    <text class="big" x="417" y="241" text-anchor="middle" transform="rotate(-90 417 241)">65</text>
-    <text class="bnd" x="218" y="360" text-anchor="middle">по 5 мм з кожного боку</text>
-  </svg></div>
-  <ul class="cond"><li>Язик <b>вужчий за спинку на 10</b>: по 5 з кожного боку, симетрично.</li><li>150 — не помилка: деталь заходить у канал 156, зазор навмисний.</li><li>🔴 <b>Вільний кінець язика зточити на клин на довжині 50.</b> Робиться болгаркою по місцю, у різку не входить.</li></ul>
-</section>
-</div>
-
-<section class="part">
-  <div class="part-head"><span class="id">Ш1</span><span>швелер 160 × 60 × 2</span><span class="qty">1 шт</span><span>ложе · вид збоку</span></div>
-  <div class="draw"><svg viewBox="0 0 1060 150" role="img" aria-label="Швелер завдовжки 1850 без обробки">
+  <div class="part-head"><span class="id">Ш1</span><span>швелер 160 × 60 × 2</span><span class="qty">1 шт</span><span>вид збоку</span></div>
+  <div class="draw"><svg viewBox="0 0 1060 130" role="img" aria-label="Швелер завдовжки 1850, без обробки">
     <path class="out" d="M58 46 L983 46 L983 76 L58 76 Z"/>
     <line class="dimline" x1="58" y1="28" x2="983" y2="28"/>
     <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
@@ -185,10 +104,84 @@ text.bnd{fill:var(--bend);font-weight:600}
     <line class="dimline" x1="30" y1="46" x2="42" y2="46"/>
     <line class="dimline" x1="30" y1="76" x2="42" y2="76"/>
     <text class="big" x="29" y="61" text-anchor="middle" transform="rotate(-90 29 61)">60</text>
-    <text class="bnd" x="520.5" y="116" text-anchor="middle">обробки немає — тільки довжина</text>
   </svg></div>
 </section>
 
+<section class="part">
+  <div class="part-head"><span class="id">Ш2</span><span>швелер 160 × 60 × 2</span><span class="qty">1 шт</span><span>вид збоку · до згину</span></div>
+  <div class="draw"><svg viewBox="0 0 1060 165" role="img" aria-label="Швелер 1850: на останніх 65 полиці зрізані, зріз нахилений, по лінії 1785 спинка відгинається">
+    <path class="out" d="M58 76 L983 76 L983 75 L941 75 L948 46 L58 46 Z"/>
+    <line class="bl" x1="950.5" y1="84" x2="950.5" y2="38"/>
+    <text class="bnd" x="950.5" y="32" text-anchor="end">згин</text>
+    <line class="dimline" x1="58" y1="28" x2="983" y2="28"/>
+    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
+    <line class="dimline" x1="983" y1="22" x2="983" y2="34"/>
+    <text class="big" x="520.5" y="21" text-anchor="middle">1850</text>
+    <line class="dimline" x1="58" y1="104" x2="950.5" y2="104"/>
+    <line class="dimline" x1="58" y1="98" x2="58" y2="110"/>
+    <line class="dimline" x1="950.5" y1="98" x2="950.5" y2="110"/>
+    <text class="big" x="504.2" y="97" text-anchor="middle">1785</text>
+    <line class="dimline" x1="58" y1="128" x2="948" y2="128"/>
+    <line class="dimline" x1="58" y1="122" x2="58" y2="134"/>
+    <line class="dimline" x1="948" y1="122" x2="948" y2="134"/>
+    <text class="big" x="503" y="121" text-anchor="middle">1780</text>
+    <line class="dimline" x1="58" y1="152" x2="941" y2="152"/>
+    <line class="dimline" x1="58" y1="146" x2="58" y2="158"/>
+    <line class="dimline" x1="941" y1="146" x2="941" y2="158"/>
+    <text class="big" x="499.5" y="145" text-anchor="middle">1766</text>
+    <line class="dimline" x1="36" y1="46" x2="36" y2="76"/>
+    <line class="dimline" x1="30" y1="46" x2="42" y2="46"/>
+    <line class="dimline" x1="30" y1="76" x2="42" y2="76"/>
+    <text class="big" x="29" y="61" text-anchor="middle" transform="rotate(-90 29 61)">60</text>
+  </svg></div>
+  <ul class="cond">
+    <li><b>1780</b> — доти йде верхня кромка полиці. <b>1766</b> — доти йде нижня. Між ними прямий зріз.</li>
+    <li><b>1785</b> — лінія згину. Далі до 1850 полиць немає взагалі, лишається сама спинка 2 мм.</li>
+    <li>🔴 Зріз нахилений <b>саме в цей бік: угорі полиця довша</b>. Навпаки не годиться.</li>
+  </ul>
+</section>
 
+<section class="part">
+  <div class="part-head"><span class="id">Ш2</span><span>кінець 150 мм</span><span class="qty">вид на спинку</span></div>
+  <div class="draw"><svg viewBox="0 0 480 300" role="img" aria-label="Вид на спинку: на останніх 65 ширина зменшується зі 160 до 150">
+    <path class="out" d="M58 46 L160 46 L160 52 L238 52 L238 232 L160 232 L160 238 L58 238 Z"/>
+    <line class="bl" x1="160" y1="40" x2="160" y2="244"/>
+    <text class="bnd" x="160" y="34" text-anchor="middle">згин</text>
+    <line class="dimline" x1="36" y1="46" x2="36" y2="238"/>
+    <line class="dimline" x1="30" y1="46" x2="42" y2="46"/>
+    <line class="dimline" x1="30" y1="238" x2="42" y2="238"/>
+    <text class="big" x="29" y="142" text-anchor="middle" transform="rotate(-90 29 142)">160</text>
+    <line class="dimline" x1="264" y1="52" x2="264" y2="232"/>
+    <line class="dimline" x1="258" y1="52" x2="270" y2="52"/>
+    <line class="dimline" x1="258" y1="232" x2="270" y2="232"/>
+    <text class="big" x="277" y="142" text-anchor="middle" transform="rotate(-90 277 142)">150</text>
+    <line class="dimline" x1="160" y1="268" x2="238" y2="268"/>
+    <line class="dimline" x1="160" y1="262" x2="160" y2="274"/>
+    <line class="dimline" x1="238" y1="262" x2="238" y2="274"/>
+    <text class="big" x="199" y="261" text-anchor="middle">65</text>
+  </svg></div>
+  <ul class="cond">
+    <li>Ширина спинки на останніх 65 — <b>150</b>, по 5 знімається з кожного боку, симетрично.</li>
+    <li>🔴 <b>Вільний кінець зточити на клин на довжині 50.</b> Болгаркою, у різку не входить.</li>
+  </ul>
+</section>
+
+<section class="part">
+  <div class="part-head"><span class="id">Ш2</span><span>кінець 150 мм</span><span class="qty">вид збоку · після згину</span></div>
+  <div class="draw"><svg viewBox="0 0 470 200" role="img" aria-label="Після згину: останні 65 відігнуті на 13,5 градуса в бік спинки">
+    <path class="out" d="M58 100 L258 100 L258 104 L58 104 Z"/>
+    <path class="out" d="M258 100 L384.4 130.4 L383.5 134.3 L258 104 Z"/>
+    <line class="ctr" x1="258" y1="100" x2="420" y2="100"/>
+    <line class="bl" x1="258" y1="62" x2="258" y2="150"/>
+    <text class="bnd" x="258" y="56" text-anchor="middle">згин</text>
+    <text class="bnd" x="360" y="116" text-anchor="start">13,5°</text>
+    <line class="dimline" x1="266" y1="152" x2="392" y2="182"/>
+    <text class="big" x="329" y="180" text-anchor="middle">65</text>
+  </svg></div>
+  <ul class="cond">
+    <li>Гнути <b>у бік спинки</b>: полиці лишаються ззовні згину.</li>
+    <li>Гнеться тільки цей кінець, решта 1785 — пряма.</li>
+  </ul>
+</section>
 
 </div>
