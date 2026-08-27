@@ -99,8 +99,8 @@ text.bnd{fill:var(--bend);font-weight:600}
 
 <section class="part">
   <div class="part-head"><span class="id">Ш2</span><span>швелер 160 × 60 × 2</span><span class="qty">1 шт</span><span>вид збоку · язик праворуч</span></div>
-  <div class="draw"><svg viewBox="0 0 1060 190" role="img" aria-label="Швелер завдовжки 1850: на останніх 65 полиці зрізані, лишається сама спинка, і по лінії 1785 вона відгинається на 13,5 градуса">
-    <path class="out" d="M58 76 L983 76 L983 75 L950.5 75 L943.6 46 L58 46 Z"/>
+  <div class="draw"><svg viewBox="0 0 1060 190" role="img" aria-label="Швелер завдовжки 1850 до згину: на останніх 65 полиці зрізані, лишається сама спинка, зріз полиці нахилений">
+    <path class="out" d="M58 76 L983 76 L983 75 L943.5 75 L950.5 46 L58 46 Z"/>
     <line class="bl" x1="950.5" y1="82" x2="950.5" y2="40"/>
     <text class="bnd" x="950.5" y="34" text-anchor="middle">згин 13,5°</text>
     <line class="dimline" x1="58" y1="28" x2="983" y2="28"/>
@@ -119,13 +119,37 @@ text.bnd{fill:var(--bend);font-weight:600}
     <line class="dimline" x1="30" y1="46" x2="42" y2="46"/>
     <line class="dimline" x1="30" y1="76" x2="42" y2="76"/>
     <text class="big" x="29" y="61" text-anchor="middle" transform="rotate(-90 29 61)">60</text>
-    <text class="bnd" x="880" y="176" text-anchor="middle">зріз полиці нахилений: 13,9 мм на висоту 58</text>
+    <text class="bnd" x="860" y="176" text-anchor="middle">полиця вгорі довша на 13,9 — щоб її торець став прямовисно</text>
     <text class="bnd" x="519.2" y="176" text-anchor="middle">на останніх 65 полиць немає — сама спинка 2 мм</text>
   </svg></div>
   <ul class="cond">
     <li><b>На останніх 65 мм обидві полиці зрізаються повністю</b> — лишається сама спинка. Вона і є язик.</li>
-    <li><b>Зріз полиць не прямий, а нахилений на 13,5°</b>: на висоту полиці 58 це <b>13,9 мм</b> по довжині. У роботі рампа стоїть під тим самим кутом, і торець полиці виходить прямовисним.</li>
+    <li>🔴 <b>Зріз полиць нахилений, і саме в цей бік:</b> угорі полиця <b>довша на 13,9 мм</b>, ніж унизу. Верхня кромка доходить до лінії згину, нижня кінчається за 13,9 до неї.</li>
+    <li><b>Навіщо саме так.</b> У роботі рампа стоїть під 13,5°, і цей нахил повертає торець полиці в прямовисне положення. Він стає впритул до торця рейки, без щілини. Якщо зрізати в інший бік — щілина подвоїться.</li>
     <li><b>Згин по лінії 1785</b> — спинка відгинається <b>у свій бік</b>, тобто від полиць, на <b>13,5°</b>. На кресленні язик показаний <b>до згину</b>, прямим: спершу ріжуть, потім гнуть.</li>
+  </ul>
+</section>
+
+<section class="part">
+  <div class="part-head"><span class="id">Ш2</span><span>язик після згину</span><span class="qty">вид збоку</span><span>так він має виглядати</span></div>
+  <div class="draw"><svg viewBox="0 0 470 230" role="img" aria-label="Язик після згину: спинка йде прямо, останні 65 відігнуті вниз на 13,5 градуса">
+    <path class="out" d="M58 100 L258 100 L258 104 L58 104 Z"/>
+    <path class="out" d="M258 100 L384.4 130.4 L383.5 134.3 L258 104 Z"/>
+    <line class="ctr" x1="258" y1="100" x2="420" y2="100"/>
+    <line class="bl" x1="258" y1="80" x2="258" y2="150"/>
+    <text class="bnd" x="258" y="74" text-anchor="middle">лінія згину</text>
+    <text class="bnd" x="330" y="96" text-anchor="middle">13,5° униз</text>
+    <line class="dimline" x1="58" y1="70" x2="258" y2="70"/>
+    <line class="dimline" x1="58" y1="64" x2="58" y2="76"/>
+    <line class="dimline" x1="258" y1="64" x2="258" y2="76"/>
+    <text class="big" x="158" y="63" text-anchor="middle">спинка рампи</text>
+    <line class="dimline" x1="266" y1="160" x2="392" y2="190"/>
+    <text class="big" x="329" y="188" text-anchor="middle">65</text>
+    <text class="bnd" x="235" y="215" text-anchor="middle">гнути В БІК СПИНКИ, тобто геть від полиць: складена рампа лежить полицями вгору, і язик дивиться вниз</text>
+  </svg></div>
+  <ul class="cond">
+    <li><b>Відгин лише на язику</b>, решта 1785 лишається прямою.</li>
+    <li>Гнути <b>у бік спинки</b> — від полиць. На попередньому кресленні язик показаний прямим, бо там він <b>до згину</b>.</li>
   </ul>
 </section>
 
@@ -167,7 +191,7 @@ text.bnd{fill:var(--bend);font-weight:600}
     <text class="big" x="29" y="61" text-anchor="middle" transform="rotate(-90 29 61)">60</text>
     <text class="bnd" x="520.5" y="116" text-anchor="middle">обробки немає — тільки довжина</text>
   </svg></div>
-  <ul class="cond"><li>Отвори ⌀10 у спинці свердляться <b>по місцю</b>, язиком рампи як кондуктором. Сюди не входять.</li></ul>
+  <ul class="cond"><li>Обробки немає взагалі: рівний відрізок, обидва торці перпендикулярні.</li></ul>
 </section>
 
 <div class="legend hi">
