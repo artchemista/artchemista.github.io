@@ -1,0 +1,254 @@
+<!doctype html><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Балка з вікнами</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FBFAF7; --card:#FFFFFF; --ink:#16181C; --ink-2:#4A505A;
+  --rule:#CBD2DA; --rule-2:#8E97A3; --cut:#16181C; --bend:#B4400E; --dim:#6A7381;
+  --tint:#EFF2F5; --ghost:#9AA4B0;
+  --f-head:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1113; --card:#161A1E; --ink:#E7EAEE; --ink-2:#A8B0BA;
+    --rule:#2A3138; --rule-2:#5A6470; --cut:#E7EAEE; --bend:#FF8A4C; --dim:#939DAA;
+    --tint:#1D2228; --ghost:#6C7681;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1113; --card:#161A1E; --ink:#E7EAEE; --ink-2:#A8B0BA;
+  --rule:#2A3138; --rule-2:#5A6470; --cut:#E7EAEE; --bend:#FF8A4C; --dim:#939DAA;
+  --tint:#1D2228; --ghost:#6C7681;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+     font-family:var(--f-head);font-size:17.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.sheet{max-width:980px;margin:0 auto;padding:34px 20px 64px;display:flex;flex-direction:column;gap:22px}
+h1{margin:0;font-size:clamp(26px,3.6vw,36px);font-weight:700;letter-spacing:-.02em}
+.meta{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.lede{margin:0;color:var(--ink-2);font-size:17px;max-width:62ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;padding:12px 14px;border:1px solid var(--rule);background:var(--tint);
+        font-family:var(--f-mono);font-size:13.5px;color:var(--ink-2)}
+.legend b{color:var(--ink);font-weight:600}
+.legend.hi{border-color:var(--bend)}
+.legend.hi b{color:var(--bend)}
+.sw{display:inline-block;width:22px;height:0;border-top:2px solid var(--cut);vertical-align:middle;margin-right:6px}
+table.list{border-collapse:collapse;width:100%;font-family:var(--f-mono);font-size:15px;
+           font-variant-numeric:tabular-nums;border:1px solid var(--rule)}
+table.list th,table.list td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+table.list th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
+              font-weight:500;background:var(--tint)}
+table.list tbody tr:last-child td{border-bottom:0}
+table.list td.n,table.list th.n{text-align:right}
+table.list td.id{font-weight:600;color:var(--bend);white-space:nowrap}
+.part{border:1px solid var(--rule);background:var(--card)}
+.part-head{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;
+           padding:11px 15px;border-bottom:1px solid var(--rule);background:var(--tint);
+           font-family:var(--f-mono);font-size:14.5px;color:var(--ink-2)}
+.part-head .id{font-family:var(--f-head);font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.part-head .qty{color:var(--bend);font-weight:600}
+.draw{padding:14px 15px 4px;overflow-x:auto}
+.draw svg{display:block;width:100%;height:auto;min-width:560px}
+ul.cond{margin:0;padding:0 15px 14px 34px;display:flex;flex-direction:column;gap:5px;
+        font-size:16.5px;color:var(--ink-2)}
+ul.cond li::marker{color:var(--bend)}
+ul.cond b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr}
+.grid2>.part{border-right:0}
+.grid2>.part:last-child{border-right:1px solid var(--rule)}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}.grid2>.part{border-right:1px solid var(--rule);border-bottom:0}.grid2>.part:last-child{border-bottom:1px solid var(--rule)}}
+text{font-family:var(--f-mono);font-size:13.5px;fill:var(--dim)}
+text.big{font-size:15px;fill:var(--ink);font-weight:600}
+text.bnd{fill:var(--bend);font-weight:600}
+.out{fill:none;stroke:var(--cut);stroke-width:2.2}
+.dimline{stroke:var(--dim);stroke-width:.9}
+.ctr{stroke:var(--rule-2);stroke-width:.8;stroke-dasharray:12 4 3 4}
+.gh{fill:none;stroke:var(--ghost);stroke-width:1.4;stroke-dasharray:7 4}
+</style>
+
+<div class="sheet">
+
+<header style="display:flex;flex-direction:column;gap:10px">
+  <div class="meta">Замовлення на різку · труби · 2026-08-27</div>
+  <h1>Балка з вікнами</h1>
+  <p class="lede">Чотири відрізки з трьох профілів. Труби свої, привезені, жоден
+     не підрізаний у розмір. Вирізи потрібні тільки в балці. Розміри в міліметрах.</p>
+  <div class="legend">
+    <span><span class="sw"></span><b>суцільна</b> — лінія різу</span>
+    <span><b>усі вирізи відкриті у верхню кромку</b> — це пази, не отвори</span>
+    <span>розміри до <b>центрів</b> вирізів, від одного торця — байдуже якого, головне від одного</span>
+    <span><b>торці перпендикулярні до осі</b> — усі чотири відрізки</span>
+  </div>
+  <div class="legend hi">
+    <span><b>Потрібен трубний лазер</b>, плоский не підійде: різ іде по трьох гранях одразу</span>
+    <span><b>Довжина ±1</b>, положення вирізів <b>±1</b></span>
+    <span><b>Вирізи тільки в плюс</b>, 0…+1</span>
+    <span><b>Обрізки повернути</b> — з них ріжеться наступний вузол</span>
+  </div>
+</header>
+
+<table class="list">
+  <thead><tr><th>№</th><th>Профіль</th><th class="n">Довжина</th><th class="n">Шт</th><th>Що робити</th></tr></thead>
+  <tbody>
+    <tr><td class="id">Т1</td><td>труба 60 × 60 × 3</td><td class="n">1850</td><td class="n">1</td><td><b>різати в розмір + 3 вирізи</b>, кожен у трьох гранях</td></tr>
+    <tr><td class="id">Т2</td><td>труба 50 × 50 × 4</td><td class="n">816</td><td class="n">1</td><td>різати в розмір, вирізів немає</td></tr>
+    <tr><td class="id">Т3</td><td>труба 40 × 40 × 3</td><td class="n">356</td><td class="n">2</td><td>різати в розмір, вирізів немає</td></tr>
+  </tbody>
+</table>
+
+<section class="part">
+  <div class="part-head"><span class="id">Т1</span><span>труба 60 × 60 × 3</span><span class="qty">1 шт</span><span>вид збоку на передню стінку</span></div>
+  <div class="draw"><svg viewBox="0 0 1060 210" role="img" aria-label="Труба 60 на 60 завдовжки 1850 з трьома вирізами, відкритими у верхню кромку: два по 40 на 40 і один 50 на 50">
+    <path class="out" d="M58 76 L983 76 L983 46 L814.7 46 L814.7 66 L794.7 66 L794.7 46 L514.7 46 L514.7 71 L489.7 71 L489.7 46 L98 46 L98 66 L78 66 L78 46 L58 46 Z"/>
+    <line class="ctr" x1="88" y1="38" x2="88" y2="176"/>
+    <line class="ctr" x1="502.2" y1="38" x2="502.2" y2="152"/>
+    <line class="ctr" x1="804.7" y1="38" x2="804.7" y2="128"/>
+    <line class="dimline" x1="58" y1="28" x2="983" y2="28"/>
+    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
+    <line class="dimline" x1="983" y1="22" x2="983" y2="34"/>
+    <text class="big" x="520.5" y="21" text-anchor="middle">1850</text>
+    <line class="dimline" x1="58" y1="124" x2="804.7" y2="124"/>
+    <line class="dimline" x1="58" y1="118" x2="58" y2="130"/>
+    <line class="dimline" x1="804.7" y1="118" x2="804.7" y2="130"/>
+    <text class="big" x="431.4" y="117" text-anchor="middle">1493,4</text>
+    <line class="dimline" x1="58" y1="148" x2="502.2" y2="148"/>
+    <line class="dimline" x1="58" y1="142" x2="58" y2="154"/>
+    <line class="dimline" x1="502.2" y1="142" x2="502.2" y2="154"/>
+    <text class="big" x="280.1" y="141" text-anchor="middle">888,4</text>
+    <line class="dimline" x1="58" y1="172" x2="88" y2="172"/>
+    <line class="dimline" x1="58" y1="166" x2="58" y2="178"/>
+    <line class="dimline" x1="88" y1="166" x2="88" y2="178"/>
+    <text class="big" x="73" y="165" text-anchor="middle">60</text>
+    <line class="dimline" x1="1010" y1="46" x2="1010" y2="76"/>
+    <line class="dimline" x1="1004" y1="46" x2="1016" y2="46"/>
+    <line class="dimline" x1="1004" y1="76" x2="1016" y2="76"/>
+    <text class="big" x="1024" y="66" text-anchor="start">60</text>
+    <line class="dimline" x1="466" y1="46" x2="466" y2="71"/>
+    <line class="dimline" x1="460" y1="46" x2="472" y2="46"/>
+    <line class="dimline" x1="460" y1="71" x2="472" y2="71"/>
+    <text class="bnd" x="454" y="64" text-anchor="end">50</text>
+    <line class="dimline" x1="130" y1="46" x2="130" y2="66"/>
+    <line class="dimline" x1="124" y1="46" x2="136" y2="46"/>
+    <line class="dimline" x1="124" y1="66" x2="136" y2="66"/>
+    <text class="bnd" x="142" y="62" text-anchor="start">40</text>
+    <text class="bnd" x="520.5" y="200" text-anchor="middle">задня стінка точно така сама · нижня стінка не чіпається</text>
+  </svg></div>
+  <ul class="cond">
+    <li><b>Кожен виріз робиться в трьох гранях:</b> передня стінка, задня і наскрізь через верхню.</li>
+    <li><b>Верхня грань одна для всіх трьох вирізів.</b> Позначте її крейдою на готовій трубі.</li>
+    <li><b>Програмувати з профілю, не з розгортки.</b> DXF розгортки навмисно не додаю: на трубі 60 × 60 × 3 розгортка периметра виходить <b>230…232</b>, а не 240 — залежно від радіуса кута, який знає ваш верстат, а не я. Ваш CAM розгорне сам, розміри тут номінальні по гранях.</li>
+  </ul>
+</section>
+
+<div class="grid2">
+<section class="part">
+  <div class="part-head"><span class="id">Т1</span><span>виріз під стінгер</span><span class="qty">1 місце</span><span>центр 888,4</span></div>
+  <div class="draw"><svg viewBox="0 0 386 236" role="img" aria-label="Виріз під стінгер: 50 завширшки, 50 завглибшки від верхньої кромки, під ним лишається 10 суцільної стінки">
+    <path class="out" d="M58 166 L318 166 L318 46 L208 46 L208 146 L108 146 L108 46 L58 46 Z"/>
+    <line class="dimline" x1="108" y1="190" x2="208" y2="190"/>
+    <line class="dimline" x1="108" y1="184" x2="108" y2="196"/>
+    <line class="dimline" x1="208" y1="184" x2="208" y2="196"/>
+    <text class="big" x="158" y="183" text-anchor="middle">50</text>
+    <line class="dimline" x1="86" y1="46" x2="86" y2="146"/>
+    <line class="dimline" x1="80" y1="46" x2="92" y2="46"/>
+    <line class="dimline" x1="80" y1="146" x2="92" y2="146"/>
+    <text class="big" x="79" y="96" text-anchor="middle" transform="rotate(-90 79 96)">50</text>
+    <line class="dimline" x1="340" y1="146" x2="340" y2="166"/>
+    <line class="dimline" x1="334" y1="146" x2="346" y2="146"/>
+    <line class="dimline" x1="334" y1="166" x2="346" y2="166"/>
+    <text class="bnd" x="352" y="162" text-anchor="start">10</text>
+    <line class="dimline" x1="366" y1="46" x2="366" y2="166"/>
+    <line class="dimline" x1="360" y1="46" x2="372" y2="46"/>
+    <line class="dimline" x1="360" y1="166" x2="372" y2="166"/>
+    <text class="big" x="379" y="106" text-anchor="middle" transform="rotate(-90 379 106)">60</text>
+    <text class="bnd" x="158" y="222" text-anchor="middle">під вирізом 10 суцільної стінки</text>
+  </svg></div>
+  <ul class="cond"><li>Ширина <b>50 (0 / +1)</b> — деталь мусить зайти.</li><li>Глибина <b>50 (0 / +0,5)</b> — глибше безпечно, мілкіше ні.</li></ul>
+</section>
+<section class="part">
+  <div class="part-head"><span class="id">Т1</span><span>виріз під поперечку</span><span class="qty">2 місця</span><span>центри 60 і 1493,4</span></div>
+  <div class="draw"><svg viewBox="0 0 386 236" role="img" aria-label="Виріз під поперечку: 40 завширшки, 40 завглибшки від верхньої кромки, під ним лишається 20 суцільної стінки">
+    <path class="out" d="M58 166 L318 166 L318 46 L228 46 L228 126 L148 126 L148 46 L58 46 Z"/>
+    <line class="dimline" x1="148" y1="190" x2="228" y2="190"/>
+    <line class="dimline" x1="148" y1="184" x2="148" y2="196"/>
+    <line class="dimline" x1="228" y1="184" x2="228" y2="196"/>
+    <text class="big" x="188" y="183" text-anchor="middle">40</text>
+    <line class="dimline" x1="126" y1="46" x2="126" y2="126"/>
+    <line class="dimline" x1="120" y1="46" x2="132" y2="46"/>
+    <line class="dimline" x1="120" y1="126" x2="132" y2="126"/>
+    <text class="big" x="119" y="86" text-anchor="middle" transform="rotate(-90 119 86)">40</text>
+    <line class="dimline" x1="340" y1="126" x2="340" y2="166"/>
+    <line class="dimline" x1="334" y1="126" x2="346" y2="126"/>
+    <line class="dimline" x1="334" y1="166" x2="346" y2="166"/>
+    <text class="bnd" x="352" y="152" text-anchor="start">20</text>
+    <line class="dimline" x1="366" y1="46" x2="366" y2="166"/>
+    <line class="dimline" x1="360" y1="46" x2="372" y2="46"/>
+    <line class="dimline" x1="360" y1="166" x2="372" y2="166"/>
+    <text class="big" x="379" y="106" text-anchor="middle" transform="rotate(-90 379 106)">60</text>
+    <text class="bnd" x="188" y="222" text-anchor="middle">під вирізом 20 суцільної стінки</text>
+  </svg></div>
+  <ul class="cond"><li>Ширина <b>40 (0 / +1)</b>, глибина <b>40 (0 / +0,5)</b>.</li><li>Обидва вирізи однакові, дзеркальних немає.</li></ul>
+</section>
+</div>
+
+<section class="part">
+  <div class="part-head"><span class="id">Т1</span><span>верхня грань</span><span class="qty">3 пази</span><span>вид зверху</span></div>
+  <div class="draw"><svg viewBox="0 0 386 216" role="img" aria-label="Вид зверху на верхню грань: паз прорізає всю ширину 60 наскрізь">
+    <path class="out" d="M58 46 L108 46 L108 166 L58 166 Z"/>
+    <path class="out" d="M208 46 L318 46 L318 166 L208 166 Z"/>
+    <line class="gh" x1="108" y1="46" x2="208" y2="46"/>
+    <line class="gh" x1="108" y1="166" x2="208" y2="166"/>
+    <line class="dimline" x1="108" y1="190" x2="208" y2="190"/>
+    <line class="dimline" x1="108" y1="184" x2="108" y2="196"/>
+    <line class="dimline" x1="208" y1="184" x2="208" y2="196"/>
+    <text class="big" x="158" y="183" text-anchor="middle">50</text>
+    <line class="dimline" x1="344" y1="46" x2="344" y2="166"/>
+    <line class="dimline" x1="338" y1="46" x2="350" y2="46"/>
+    <line class="dimline" x1="338" y1="166" x2="350" y2="166"/>
+    <text class="big" x="357" y="106" text-anchor="middle" transform="rotate(-90 357 106)">60</text>
+    <text class="bnd" x="158" y="110" text-anchor="middle">метал прибрано</text>
+  </svg></div>
+  <ul class="cond">
+    <li>Паз тієї самої ширини, що й виріз у стінках: <b>50</b> під стінгер, <b>40</b> під обидві поперечки.</li>
+    <li>Прорізає верхню грань <b>наскрізь по всій ширині 60</b> — це продовження вирізу, а не окремий отвір.</li>
+  </ul>
+</section>
+
+<div class="grid2">
+<section class="part">
+  <div class="part-head"><span class="id">Т2</span><span>труба 50 × 50 × 4</span><span class="qty">1 шт</span><span>стінгер</span></div>
+  <div class="draw"><svg viewBox="0 0 560 130" role="img" aria-label="Труба 50 на 50 завдовжки 816, без вирізів">
+    <path class="out" d="M58 46 L484 46 L484 72 L58 72 Z"/>
+    <line class="dimline" x1="58" y1="28" x2="484" y2="28"/>
+    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
+    <line class="dimline" x1="484" y1="22" x2="484" y2="34"/>
+    <text class="big" x="271" y="21" text-anchor="middle">816</text>
+    <line class="dimline" x1="510" y1="46" x2="510" y2="72"/>
+    <line class="dimline" x1="504" y1="46" x2="516" y2="46"/>
+    <line class="dimline" x1="504" y1="72" x2="516" y2="72"/>
+    <text class="big" x="524" y="66" text-anchor="start">50</text>
+    <text class="bnd" x="271" y="108" text-anchor="middle">вирізів немає — тільки довжина</text>
+  </svg></div>
+  <ul class="cond"><li>Два отвори ⌀17 під пальці свердляться по примірці, сюди не входять.</li></ul>
+</section>
+<section class="part">
+  <div class="part-head"><span class="id">Т3</span><span>труба 40 × 40 × 3</span><span class="qty">2 шт</span><span>поперечки</span></div>
+  <div class="draw"><svg viewBox="0 0 560 130" role="img" aria-label="Труба 40 на 40 завдовжки 356, дві однакові, без вирізів">
+    <path class="out" d="M58 46 L243.1 46 L243.1 66.8 L58 66.8 Z"/>
+    <line class="dimline" x1="58" y1="28" x2="243.1" y2="28"/>
+    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
+    <line class="dimline" x1="243.1" y1="22" x2="243.1" y2="34"/>
+    <text class="big" x="150.6" y="21" text-anchor="middle">356</text>
+    <line class="dimline" x1="269" y1="46" x2="269" y2="66.8"/>
+    <line class="dimline" x1="263" y1="46" x2="275" y2="46"/>
+    <line class="dimline" x1="263" y1="66.8" x2="275" y2="66.8"/>
+    <text class="big" x="283" y="62" text-anchor="start">40</text>
+    <text class="bnd" x="150.6" y="108" text-anchor="middle">вирізів немає — тільки довжина, обидві однакові</text>
+  </svg></div>
+  <ul class="cond"><li>Різниця довжин між двома <b>не більше 0,5</b>.</li></ul>
+</section>
+</div>
+
+</div>
