@@ -1,0 +1,177 @@
+<!doctype html><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Рампа з язиком</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FBFAF7; --card:#FFFFFF; --ink:#16181C; --ink-2:#4A505A;
+  --rule:#CBD2DA; --rule-2:#8E97A3; --cut:#16181C; --bend:#B4400E; --dim:#6A7381;
+  --tint:#EFF2F5; --ghost:#9AA4B0;
+  --f-head:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1113; --card:#161A1E; --ink:#E7EAEE; --ink-2:#A8B0BA;
+    --rule:#2A3138; --rule-2:#5A6470; --cut:#E7EAEE; --bend:#FF8A4C; --dim:#939DAA;
+    --tint:#1D2228; --ghost:#6C7681;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1113; --card:#161A1E; --ink:#E7EAEE; --ink-2:#A8B0BA;
+  --rule:#2A3138; --rule-2:#5A6470; --cut:#E7EAEE; --bend:#FF8A4C; --dim:#939DAA;
+  --tint:#1D2228; --ghost:#6C7681;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+     font-family:var(--f-head);font-size:17.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.sheet{max-width:980px;margin:0 auto;padding:34px 20px 64px;display:flex;flex-direction:column;gap:22px}
+h1{margin:0;font-size:clamp(26px,3.6vw,36px);font-weight:700;letter-spacing:-.02em}
+.meta{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.lede{margin:0;color:var(--ink-2);font-size:17px;max-width:62ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;padding:12px 14px;border:1px solid var(--rule);background:var(--tint);
+        font-family:var(--f-mono);font-size:13.5px;color:var(--ink-2)}
+.legend b{color:var(--ink);font-weight:600}
+.legend.hi{border-color:var(--bend)}
+.legend.hi b{color:var(--bend)}
+.sw{display:inline-block;width:22px;height:0;border-top:2px solid var(--cut);vertical-align:middle;margin-right:6px}
+.sw.b{border-top:2px dashed var(--bend)}
+table.list{border-collapse:collapse;width:100%;font-family:var(--f-mono);font-size:15px;
+           font-variant-numeric:tabular-nums;border:1px solid var(--rule)}
+table.list th,table.list td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+table.list th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
+              font-weight:500;background:var(--tint)}
+table.list tbody tr:last-child td{border-bottom:0}
+table.list td.n,table.list th.n{text-align:right}
+table.list td.id{font-weight:600;color:var(--bend);white-space:nowrap}
+.part{border:1px solid var(--rule);background:var(--card)}
+.part-head{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;
+           padding:11px 15px;border-bottom:1px solid var(--rule);background:var(--tint);
+           font-family:var(--f-mono);font-size:14.5px;color:var(--ink-2)}
+.part-head .id{font-family:var(--f-head);font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.part-head .qty{color:var(--bend);font-weight:600}
+.draw{padding:14px 15px 4px;overflow-x:auto}
+.draw svg{display:block;width:100%;height:auto;min-width:560px}
+ul.cond{margin:0;padding:0 15px 14px 34px;display:flex;flex-direction:column;gap:5px;
+        font-size:16.5px;color:var(--ink-2)}
+ul.cond li::marker{color:var(--bend)}
+ul.cond b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr}
+.grid2>.part{border-right:0}
+.grid2>.part:last-child{border-right:1px solid var(--rule)}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}.grid2>.part{border-right:1px solid var(--rule);border-bottom:0}.grid2>.part:last-child{border-bottom:1px solid var(--rule)}}
+text{font-family:var(--f-mono);font-size:13.5px;fill:var(--dim)}
+text.big{font-size:15px;fill:var(--ink);font-weight:600}
+text.bnd{fill:var(--bend);font-weight:600}
+.out{fill:none;stroke:var(--cut);stroke-width:2.2}
+.bl{stroke:var(--bend);stroke-width:2.2;stroke-dasharray:9 5;fill:none}
+.dimline{stroke:var(--dim);stroke-width:.9}
+.ctr{stroke:var(--rule-2);stroke-width:.8;stroke-dasharray:12 4 3 4}
+.gh{fill:none;stroke:var(--ghost);stroke-width:1.4;stroke-dasharray:7 4}
+</style>
+
+<div class="sheet">
+
+<header style="display:flex;flex-direction:column;gap:10px">
+  <div class="meta">Замовлення на різку · швелер · 2026-08-27</div>
+  <h1>Рампа з язиком</h1>
+  <p class="lede">Два відрізки гнутого швелера 160 × 60 × 2. Один просто в розмір,
+     другий із язиком: на ньому зрізають полиці й відгинають спинку. Розміри в міліметрах.</p>
+  <div class="legend">
+    <span><span class="sw"></span><b>суцільна</b> — лінія різу</span>
+    <span><span class="sw b"></span><b>штрихова помаранчева</b> — <b>лінія згину: по ній гнуть, не ріжуть</b></span>
+    <span><b>торці перпендикулярні до осі</b>, крім зрізу полиць</span>
+  </div>
+  <div class="legend hi">
+    <span><b>Довжина ±1</b>, положення лінії згину <b>±1</b></span>
+    <span><b>Кут згину 13,55°</b>, допуск ±0,5°</span>
+    <span><b>Обрізки повернути</b></span>
+  </div>
+</header>
+
+<table class="list">
+  <thead><tr><th>№</th><th>Профіль</th><th class="n">Довжина</th><th class="n">Шт</th><th>Що робити</th></tr></thead>
+  <tbody>
+    <tr><td class="id">Ш1</td><td>швелер 160 × 60 × 2</td><td class="n">1850</td><td class="n">1</td><td>різати в розмір, більше нічого</td></tr>
+    <tr><td class="id">Ш2</td><td>швелер 160 × 60 × 2</td><td class="n">1845</td><td class="n">1</td><td><b>різати в розмір + язик</b>: зрізати полиці, звузити спинку, відігнути</td></tr>
+  </tbody>
+</table>
+
+<section class="part">
+  <div class="part-head"><span class="id">Ш2</span><span>швелер 160 × 60 × 2</span><span class="qty">1 шт</span><span>вид збоку · язик праворуч</span></div>
+  <div class="draw"><svg viewBox="0 0 1060 190" role="img" aria-label="Швелер завдовжки 1845: на останніх 65 полиці зрізані, лишається сама спинка, і по лінії 1780 вона відгинається на 13,55 градуса">
+    <path class="out" d="M58 76 L980.5 76 L980.5 75 L948 75 L941 46 L58 46 Z"/>
+    <line class="bl" x1="948" y1="82" x2="948" y2="40"/>
+    <text class="bnd" x="948" y="34" text-anchor="middle">згин 13,55°</text>
+    <line class="dimline" x1="58" y1="28" x2="980.5" y2="28"/>
+    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
+    <line class="dimline" x1="980.5" y1="22" x2="980.5" y2="34"/>
+    <text class="big" x="519.2" y="21" text-anchor="middle">1845</text>
+    <line class="dimline" x1="58" y1="112" x2="948" y2="112"/>
+    <line class="dimline" x1="58" y1="106" x2="58" y2="118"/>
+    <line class="dimline" x1="948" y1="106" x2="948" y2="118"/>
+    <text class="big" x="503" y="105" text-anchor="middle">1780</text>
+    <line class="dimline" x1="948" y1="136" x2="980.5" y2="136"/>
+    <line class="dimline" x1="948" y1="130" x2="948" y2="142"/>
+    <line class="dimline" x1="980.5" y1="130" x2="980.5" y2="142"/>
+    <text class="big" x="964" y="129" text-anchor="middle">65</text>
+    <line class="dimline" x1="36" y1="46" x2="36" y2="76"/>
+    <line class="dimline" x1="30" y1="46" x2="42" y2="46"/>
+    <line class="dimline" x1="30" y1="76" x2="42" y2="76"/>
+    <text class="big" x="29" y="61" text-anchor="middle" transform="rotate(-90 29 61)">60</text>
+    <text class="bnd" x="880" y="176" text-anchor="middle">зріз полиці нахилений: 14 мм на висоту 58</text>
+    <text class="bnd" x="519.2" y="176" text-anchor="middle">на останніх 65 полиць немає — сама спинка 2 мм</text>
+  </svg></div>
+  <ul class="cond">
+    <li><b>На останніх 65 мм обидві полиці зрізаються повністю</b> — лишається сама спинка. Вона і є язик.</li>
+    <li><b>Зріз полиць не прямий, а нахилений на 13,55°</b>: на висоту полиці 58 це <b>14 мм</b> по довжині. У роботі рампа стоїть під тим самим кутом, і торець полиці виходить прямовисним.</li>
+    <li><b>Згин по лінії 1780</b> — спинка відгинається <b>у свій бік</b>, тобто від полиць, на <b>13,55°</b>.</li>
+  </ul>
+</section>
+
+<section class="part">
+  <div class="part-head"><span class="id">Ш2</span><span>язик</span><span class="qty">вид на спинку</span></div>
+  <div class="draw"><svg viewBox="0 0 480 300" role="img" aria-label="Вид на спинку з боку язика: ширина 160 звужується до 150 на останніх 65">
+    <path class="out" d="M58 46 L378 46 L378 176 L368 176 L368 306 L68 306 L68 176 L58 176 Z"/>
+    <line class="bl" x1="52" y1="176" x2="384" y2="176"/>
+    <text class="bnd" x="218" y="168" text-anchor="middle">лінія згину</text>
+    <line class="dimline" x1="58" y1="28" x2="378" y2="28"/>
+    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
+    <line class="dimline" x1="378" y1="22" x2="378" y2="34"/>
+    <text class="big" x="218" y="21" text-anchor="middle">160</text>
+    <line class="dimline" x1="68" y1="330" x2="368" y2="330"/>
+    <line class="dimline" x1="68" y1="324" x2="68" y2="336"/>
+    <line class="dimline" x1="368" y1="324" x2="368" y2="336"/>
+    <text class="big" x="218" y="323" text-anchor="middle">150</text>
+    <line class="dimline" x1="404" y1="176" x2="404" y2="306"/>
+    <line class="dimline" x1="398" y1="176" x2="410" y2="176"/>
+    <line class="dimline" x1="398" y1="306" x2="410" y2="306"/>
+    <text class="big" x="417" y="241" text-anchor="middle" transform="rotate(-90 417 241)">65</text>
+    <text class="bnd" x="218" y="360" text-anchor="middle">по 5 мм з кожного боку</text>
+  </svg></div>
+  <ul class="cond"><li>Язик <b>вужчий за спинку на 10</b>: по 5 з кожного боку, симетрично.</li><li>Заходить у канал ложа 156, тому 150 — це посадка з зазором.</li></ul>
+</section>
+</div>
+
+<section class="part">
+  <div class="part-head"><span class="id">Ш1</span><span>швелер 160 × 60 × 2</span><span class="qty">1 шт</span><span>ложе · вид збоку</span></div>
+  <div class="draw"><svg viewBox="0 0 1060 150" role="img" aria-label="Швелер завдовжки 1850 без обробки">
+    <path class="out" d="M58 46 L983 46 L983 76 L58 76 Z"/>
+    <line class="dimline" x1="58" y1="28" x2="983" y2="28"/>
+    <line class="dimline" x1="58" y1="22" x2="58" y2="34"/>
+    <line class="dimline" x1="983" y1="22" x2="983" y2="34"/>
+    <text class="big" x="520.5" y="21" text-anchor="middle">1850</text>
+    <line class="dimline" x1="36" y1="46" x2="36" y2="76"/>
+    <line class="dimline" x1="30" y1="46" x2="42" y2="46"/>
+    <line class="dimline" x1="30" y1="76" x2="42" y2="76"/>
+    <text class="big" x="29" y="61" text-anchor="middle" transform="rotate(-90 29 61)">60</text>
+    <text class="bnd" x="520.5" y="116" text-anchor="middle">обробки немає — тільки довжина</text>
+  </svg></div>
+  <ul class="cond"><li>Отвори ⌀10 у спинці свердляться <b>по місцю</b>, язиком рампи як кондуктором. Сюди не входять.</li></ul>
+</section>
+
+<div class="legend hi">
+  <span><b>Профіль гнеться зі смуги 273 мм.</b> Ш1 і Ш2 разом дають 3695 — смуга береться <b>3700</b>, п'ять міліметрів на різ</span>
+</div>
+
+</div>
