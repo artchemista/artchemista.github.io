@@ -37,9 +37,11 @@ h1 { margin:0; font-size:clamp(22px,3.2vw,30px); line-height:1.15; letter-spacin
 .vgroup button:hover { color:var(--ink); }
 .vgroup button[aria-pressed="true"] { background:var(--ink); color:var(--ground); }
 .vtog.off { opacity:.38; cursor:default; }
-.wbtn { font-family:var(--f-mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase;
-        padding:8px 16px; cursor:pointer; border:1px solid var(--accent); background:transparent;
-        color:var(--accent); font-weight:600; }
+.wgrp { display:flex; border:1px solid var(--accent); }
+.wbtn { font-family:var(--f-mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+        padding:7px 13px; cursor:pointer; border:0; border-right:1px solid var(--accent);
+        background:transparent; color:var(--accent); font-weight:600; }
+.wbtn:last-child { border-right:0; }
 .wbtn[aria-pressed="true"] { background:var(--accent); color:#fff; }
 .vtog { display:flex; align-items:center; gap:7px; cursor:pointer; font-family:var(--f-mono); font-size:11.5px; color:var(--ink-2); }
 .vhint { font-family:var(--f-mono); font-size:11px; color:var(--muted); margin-left:auto; }
@@ -68,7 +70,13 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
 <div class="viewer">
   <canvas id="m3d" aria-label="Покрокова тривимірна модель базового блока платформи: швелер на профільній трубі, далі черевик під переднє колесо – жолоб із труби 120 на 120 із загнутим носком, далі стінгер у гніздо приймача з чотирма косинками"></canvas>
   <div class="vbar">
-    <button type="button" id="b-weld" class="wbtn" aria-pressed="false">розміри зварнику</button>
+    <div class="vgroup wgrp" role="group" aria-label="Розміри зварнику">
+      <button type="button" class="wbtn" data-wd="beam" aria-pressed="false">балка</button>
+      <button type="button" class="wbtn" data-wd="out" aria-pressed="false">виноси</button>
+      <button type="button" class="wbtn" data-wd="st" aria-pressed="false">стінгер</button>
+      <button type="button" class="wbtn" data-wd="lz" aria-pressed="false">швелер</button>
+      <button type="button" class="wbtn" data-wd="ch" aria-pressed="false">черевик</button>
+    </div>
     <div class="vgroup" role="group" aria-label="Вигляд">
       <button type="button" data-view="iso" aria-pressed="true">3/4</button>
       <button type="button" data-view="end" aria-pressed="false">з торця</button>
@@ -1843,7 +1851,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
 
   var cv=document.getElementById('m3d'); if(!cv) return;
   var ctx=cv.getContext('2d');
-  var st={ yaw:38*D2R, pitch:34*D2R, explode:false, zoom:false, step:4, weld:false, bike:false, car:false, ramp:false, rampDown:false, wheels:false, frameOn:false, cases:false, solo:false };
+  var st={ yaw:38*D2R, pitch:34*D2R, explode:false, zoom:false, step:4, wd:{beam:0,out:0,st:0,lz:0,ch:0}, bike:false, car:false, ramp:false, rampDown:false, wheels:false, frameOn:false, cases:false, solo:false };
   var buf=null, img=null, out=null;
 
   function bgColor() {
@@ -1873,40 +1881,49 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
   function weldDims() {
     var MOUTH = -129.75, FRONT = 260, BACK = 320, TOPZ = 481;
     return [
-      // ---- прив'язки по довжині, ззаду блока, трьома ярусами ----
-      { a:[-888.4, 400, 296], b:[-828.4, 400, 296], t:'60 від лівого торця', w:1 },
-      { a:[605, 400, 296],    b:[961.6, 400, 296],  t:'356,6 від правого торця', w:1 },
-      { a:[-888.4, 400, 332], b:[0, 400, 332],      t:'888,4 від лівого', w:1 },
-      { a:[0, 400, 332],      b:[961.6, 400, 332],  t:'961,6 від правого', w:1 },
-      { a:[-888.4, 400, 368], b:[961.6, 400, 368],  t:'1 850 балка', w:1 },
-      // ---- вікна і перемички, спереду, далеко від тіла ----
-      { a:[-25, 170, 487],    b:[25, 170, 487],     t:'вікно 50', w:1 },
-      { a:[-848.4, 170, 487], b:[-808.4, 170, 487], t:'вікно 40, обидва однакові', w:1 },
-      { a:[0, 170, 421],      b:[0, 170, 431],      t:'перемичка 10', w:1 },
-      { a:[-828.4, 170, 421], b:[-828.4, 170, 441], t:'перемичка 20', w:1 },
+      // ---- балка: прив'язки по довжині, вікна, перемички ----
+      { g:'beam', a:[-888.4, 470, 296], b:[-828.4, 470, 296], t:'60 від лівого торця', w:1 },
+      { g:'beam', a:[605, 470, 296],    b:[961.6, 470, 296],  t:'356,6 від правого торця', w:1 },
+      { g:'beam', a:[-888.4, 470, 332], b:[0, 470, 332],      t:'888,4 від лівого', w:1 },
+      { g:'beam', a:[0, 470, 332],      b:[961.6, 470, 332],  t:'961,6 від правого', w:1 },
+      { g:'beam', a:[-888.4, 470, 368], b:[961.6, 470, 368],  t:'1 850 балка', w:1 },
+      { g:'beam', a:[-25, 170, 487],    b:[25, 170, 487],     t:'вікно 50', w:1 },
+      { g:'beam', a:[-848.4, 170, 487], b:[-808.4, 170, 487], t:'вікно 40, обидва однакові', w:1 },
+      { g:'beam', a:[0, 170, 421],      b:[0, 170, 431],      t:'перемичка 10', w:1 },
+      { g:'beam', a:[-828.4, 170, 421], b:[-828.4, 170, 441], t:'перемичка 20', w:1 },
+      { g:'beam', a:[-888.4, 170, 421], b:[-888.4, 170, 481], t:'60 висота балки', w:1 },
       // ---- виноси ----
-      { a:[-828.4, 112, 512], b:[-828.4, 468, 512], t:'356 винос наскрізь', w:1 },
-      { a:[-828.4, 112, 452], b:[-828.4, 260, 452], t:'148 звис', w:1 },
-      { a:[605, 112, 512],    b:[605, 468, 512],    t:'356', w:1 },
+      { g:'out', a:[-828.4, 112, 512], b:[-828.4, 468, 512], t:'356 винос наскрізь', w:1 },
+      { g:'out', a:[-828.4, 112, 452], b:[-828.4, 260, 452], t:'148 звис', w:1 },
+      { g:'out', a:[605, 112, 512],    b:[605, 468, 512],    t:'356', w:1 },
+      { g:'out', a:[-828.4, 500, 441], b:[-828.4, 500, 481], t:'40 винос', w:1 },
       // ---- стінгер ----
-      { a:[0, MOUTH, 536], b:[0, FRONT, 536],   t:'390 виліт до устя', w:1 },
-      { a:[0, 370, 536],   b:[0, 474, 536],     t:'104 стуб', w:1 },
-      { a:[0, MOUTH, 500], b:[0, 210.25, 500],  t:'340 верхня накладка', w:1 },
-      { a:[0, MOUTH, 404], b:[0, 258.25, 404],  t:'388 нижня накладка', w:1 },
+      { g:'st', a:[0, MOUTH, 630], b:[0, FRONT, 630],   t:'390 виліт до устя', w:1 },
+      { g:'st', a:[0, 370, 630],   b:[0, 474, 630],     t:'104 стуб', w:1 },
+      { g:'st', a:[130, MOUTH, 505], b:[130, 210.25, 505],  t:'340 верхня накладка', w:1 },
+      { g:'st', a:[-130, MOUTH, 505], b:[-130, 258.25, 505], t:'388 нижня накладка', w:1 },
+      { g:'st', a:[-230, 120, 431], b:[-230, 120, 481],   t:'50 стінгер', w:1 },
+      // ---- швелер ложа ----
+      { g:'lz', a:[300, 210, 560], b:[300, 370, 560], t:'160 швелер', w:1 },
+      { g:'lz', a:[520, 212, 560], b:[520, 368, 560], t:'156 канал', w:1 },
+      { g:'lz', a:[961.6, 430, 481], b:[961.6, 430, 541], t:'60 полиця', w:1 },
+      { g:'lz', a:[-888.4, 470, 481], b:[961.6, 470, 481], t:'1 850, торці врівень із балкою', w:1 },
       // ---- черевик і скоба ----
-      { a:[-888, 170, 610], b:[-625, 170, 610],     t:'263 черевик до згину', w:1 },
-      { a:[-828.4, 205, 250], b:[-828.4, 375, 250], t:'170 канал скоби', w:1 }
+      { g:'ch', a:[-888, 170, 610], b:[-625, 170, 610],     t:'263 черевик до згину', w:1 },
+      { g:'ch', a:[-888.4, 170, 700], b:[-625, 170, 700],   t:'задній торець на X −625', w:1 },
+      { g:'ch', a:[-828.4, 205, 250], b:[-828.4, 375, 250], t:'170 канал скоби', w:1 }
     ];
   }
   function dims(F, dpr) {
     if (st.zoom) return;
-    if (!st.bike && !st.weld) return;
+    var anyW = st.wd.beam||st.wd.out||st.wd.st||st.wd.lz||st.wd.ch;
+    if (!st.bike && !anyW) return;
     var cs = getComputedStyle(document.documentElement);
     var ink = (cs.getPropertyValue('--ink') || '').trim() || '#15181C';
     var surf = (cs.getPropertyValue('--surface') || '').trim() || '#F8F9FA';
     var D = [], i, A, B, dx, dy, L, ux, uy, mx, my, w;
     if (st.bike) D = D.concat(bikeDims(st.explode ? LIFT : 0));
-    if (st.weld) D = D.concat(weldDims());
+    if (anyW) D = D.concat(weldDims().filter(function(d){ return st.wd[d.g]; }));
     function scr(p){ var q = F.K.pr(p, CENTER); return [q[0]*F.s+F.ox, q[1]*F.s+F.oy]; }
     function head(x, y, ux, uy) {
       var k = 8*dpr, o = 3.2*dpr;
@@ -1969,12 +1986,21 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
   Array.prototype.forEach.call(document.querySelectorAll('.vgroup [data-step]'),function(b){
     b.addEventListener('click',function(){ pressOnly('.vgroup [data-step]', b); st.step=+b.dataset.step; applyStep(); draw(); });
   });
-  var bw=document.getElementById('b-weld');
-  if(bw) bw.addEventListener('click',function(){
-    st.weld=!st.weld;
-    bw.setAttribute('aria-pressed', st.weld ? 'true' : 'false');
-    draw();
+  Array.prototype.forEach.call(document.querySelectorAll('[data-wd]'),function(b){
+    b.addEventListener('click',function(){
+      var k=b.dataset.wd; st.wd[k]=!st.wd[k];
+      b.setAttribute('aria-pressed', st.wd[k] ? 'true' : 'false');
+      draw();
+    });
   });
+  // ?w=beam,st – увімкнути групи розмірів одразу, зручно для знімків і посилань
+  (function(){
+    var m=/[?&]w=([a-z,]+)/.exec(location.search); if(!m) return;
+    m[1].split(',').forEach(function(k){
+      if(!(k in st.wd)) return; st.wd[k]=1;
+      var b=document.querySelector('[data-wd="'+k+'"]'); if(b) b.setAttribute('aria-pressed','true');
+    });
+  })();
   var te=document.getElementById('t-exp');
   if(te) te.addEventListener('change',function(){ st.explode=te.checked; draw(); });
   var td=document.getElementById('t-rdown');
