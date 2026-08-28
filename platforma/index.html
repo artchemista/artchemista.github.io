@@ -36,6 +36,7 @@ h1 { margin:0; font-size:clamp(22px,3.2vw,30px); line-height:1.15; letter-spacin
 .vgroup button:last-child { border-right:0; }
 .vgroup button:hover { color:var(--ink); }
 .vgroup button[aria-pressed="true"] { background:var(--ink); color:var(--ground); }
+.vtog.off { opacity:.38; cursor:default; }
 .wbtn { font-family:var(--f-mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase;
         padding:8px 16px; cursor:pointer; border:1px solid var(--accent); background:transparent;
         color:var(--accent); font-weight:600; }
@@ -75,15 +76,14 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
       <button type="button" data-view="top" aria-pressed="false">згори</button>
       <button type="button" data-view="node" aria-pressed="false">вузол</button>
     </div>
-    <label class="vtog"><input type="checkbox" id="t-exp"> рознести</label>
     <label class="vtog"><input type="checkbox" id="t-bike"> мотоцикл</label>
     <label class="vtog"><input type="checkbox" id="t-car"> машина</label>
     <label class="vtog"><input type="checkbox" id="t-ramp"> рампа складена</label>
-    <label class="vtog"><input type="checkbox" id="t-wheels"> колеса</label>
-    <label class="vtog"><input type="checkbox" id="t-frame"> рамка</label>
-    <label class="vtog"><input type="checkbox" id="t-cases"> кейс</label>
-    <label class="vtog"><input type="checkbox" id="t-solo"> тільки кейс</label>
     <label class="vtog"><input type="checkbox" id="t-rdown"> рампа в роботі</label>
+    <label class="vtog"><input type="checkbox" id="t-wheels"> колеса</label>
+    <label class="vtog off"><input type="checkbox" id="t-frame" disabled> рамка</label>
+    <label class="vtog off"><input type="checkbox" id="t-cases" disabled> кейс</label>
+    <label class="vtog off"><input type="checkbox" id="t-solo" disabled> тільки кейс</label>
     <span class="vhint">тягнути – обертати</span>
   </div>
   <div class="vkey">
@@ -1876,7 +1876,9 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
       { a:[-888.4, 400, 380], b:[961.6, 400, 380], t:'1 850 балка' },
       { a:[-888.4, 400, 340], b:[0, 400, 340],     t:'888,4 до осі стінгера' },
       { a:[-888.4, 400, 300], b:[605, 400, 300],   t:'1 493,4 до другого виносу' },
-      { a:[-888.4, 400, 260], b:[-828.4, 400, 260], t:'60' },
+      { a:[-888.4, 400, 260], b:[-828.4, 400, 260], t:'60 до осі виносу' },
+      { a:[-828.4, 112, 505], b:[-828.4, 468, 505], t:'356 винос наскрізь' },
+      { a:[-828.4, 112, 470], b:[-828.4, 260, 470], t:'148 звис' },
       { a:[0, MOUTH, 520], b:[0, FRONT, 520],      t:'390 виліт до устя' },
       { a:[0, 370, 520],    b:[0, 474, 520],       t:'104 стуб під маму' },
       { a:[0, MOUTH, 492],  b:[0, 210.25, 492],    t:'340 верхня накладка' },
