@@ -1,0 +1,287 @@
+<!doctype html><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Зварювання блока</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FBFAF7; --card:#FFFFFF; --ink:#16181C; --ink-2:#4A505A;
+  --rule:#CBD2DA; --rule-2:#8E97A3; --cut:#16181C; --bend:#B4400E; --dim:#6A7381;
+  --tint:#EFF2F5; --ghost:#9AA4B0;
+  --f-head:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1113; --card:#161A1E; --ink:#E7EAEE; --ink-2:#A8B0BA;
+    --rule:#2A3138; --rule-2:#5A6470; --cut:#E7EAEE; --bend:#FF8A4C; --dim:#939DAA;
+    --tint:#1D2228; --ghost:#6C7681;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1113; --card:#161A1E; --ink:#E7EAEE; --ink-2:#A8B0BA;
+  --rule:#2A3138; --rule-2:#5A6470; --cut:#E7EAEE; --bend:#FF8A4C; --dim:#939DAA;
+  --tint:#1D2228; --ghost:#6C7681;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+     font-family:var(--f-head);font-size:17.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.sheet{max-width:980px;margin:0 auto;padding:34px 20px 64px;display:flex;flex-direction:column;gap:22px}
+h1{margin:0;font-size:clamp(26px,3.6vw,36px);font-weight:700;letter-spacing:-.02em}
+.meta{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.lede{margin:0;color:var(--ink-2);font-size:17px;max-width:62ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;padding:12px 14px;border:1px solid var(--rule);background:var(--tint);
+        font-family:var(--f-mono);font-size:13.5px;color:var(--ink-2)}
+.legend b{color:var(--ink);font-weight:600}
+.legend.hi{border-color:var(--bend)}
+.legend.hi b{color:var(--bend)}
+.sw{display:inline-block;width:22px;height:0;border-top:2px solid var(--cut);vertical-align:middle;margin-right:6px}
+table.list{border-collapse:collapse;width:100%;font-family:var(--f-mono);font-size:15px;
+           font-variant-numeric:tabular-nums;border:1px solid var(--rule)}
+table.list th,table.list td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+table.list th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
+              font-weight:500;background:var(--tint)}
+table.list tbody tr:last-child td{border-bottom:0}
+table.list td.n,table.list th.n{text-align:right}
+table.list td.id{font-weight:600;color:var(--bend);white-space:nowrap}
+.part{border:1px solid var(--rule);background:var(--card)}
+.part-head{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;
+           padding:11px 15px;border-bottom:1px solid var(--rule);background:var(--tint);
+           font-family:var(--f-mono);font-size:14.5px;color:var(--ink-2)}
+.part-head .id{font-family:var(--f-head);font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.part-head .qty{color:var(--bend);font-weight:600}
+.draw{padding:14px 15px 4px;overflow-x:auto}
+.draw svg{display:block;width:100%;height:auto;min-width:560px}
+ul.cond{margin:0;padding:0 15px 14px 34px;display:flex;flex-direction:column;gap:5px;
+        font-size:16.5px;color:var(--ink-2)}
+ul.cond li::marker{color:var(--bend)}
+ul.cond b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr}
+.grid2>.part{border-right:0}
+.grid2>.part:last-child{border-right:1px solid var(--rule)}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}.grid2>.part{border-right:1px solid var(--rule);border-bottom:0}.grid2>.part:last-child{border-bottom:1px solid var(--rule)}}
+text{font-family:var(--f-mono);font-size:13.5px;fill:var(--dim)}
+text.big{font-size:15px;fill:var(--ink);font-weight:600}
+text.bnd{fill:var(--bend);font-weight:600}
+.out{fill:none;stroke:var(--cut);stroke-width:2.2}
+.dimline{stroke:var(--dim);stroke-width:.9}
+.ctr{stroke:var(--rule-2);stroke-width:.8;stroke-dasharray:12 4 3 4}
+.gh{fill:none;stroke:var(--ghost);stroke-width:1.4;stroke-dasharray:7 4}
+.weld{fill:none;stroke:var(--bend);stroke-width:3.6;stroke-linecap:round}
+.plate{fill:var(--tint);stroke:var(--cut);stroke-width:1.8}
+.note{font-size:12.5px;fill:var(--dim)}
+.step{border-collapse:collapse;width:100%;font-size:16px;border:1px solid var(--rule)}
+.step th,.step td{padding:8px 13px;border-bottom:1px solid var(--rule);vertical-align:top;text-align:left}
+.step th{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:500;background:var(--tint)}
+.step td.n{font-family:var(--f-mono);font-weight:600;color:var(--bend);text-align:right;white-space:nowrap}
+.step tbody tr:last-child td{border-bottom:0}
+.stop{border:1px solid var(--bend)}
+.stop .part-head{border-color:var(--bend)}
+.stop ul.cond li::marker{color:var(--bend)}
+h2{margin:16px 0 -6px;font-size:21px;font-weight:700;letter-spacing:-.01em}
+</style>
+
+<div class="sheet">
+
+<header style="display:flex;flex-direction:column;gap:10px">
+  <div class="meta">Замовлення на зварювання · базовий блок · 2026-08-28</div>
+  <h1>Зварювання блока</h1>
+  <p class="lede">Балка, стінгер, два виноси, ложе і черевик зварюються в одне ціле.
+     Деталі приходять уже порізані, підгонки по довжині немає. Розміри в міліметрах.</p>
+  <div class="legend hi">
+    <span><b>Перпендикулярність стінгера до балки – єдине, що потім не виправити.</b> Похибка 1° розвертає кінець балки на 16 мм</span>
+    <span><b>Спершу все на прихватках</b>, тоді заміри, тоді шов</span>
+    <span><b>Симетрично і зворотно-ступінчасто</b>, валик 40–50 мм, наступний – з протилежного боку</span>
+    <span><b>Не гасити водою</b> – дати охолонути до «терпить рука»</span>
+  </div>
+</header>
+
+<h2>Три бази</h2>
+<table class="list">
+  <thead><tr><th>База</th><th>Що це</th><th>Навіщо</th></tr></thead>
+  <tbody>
+    <tr><td class="id">А</td><td>вісь стінгера</td><td>задає напрямок усієї платформи</td></tr>
+    <tr><td class="id">Б</td><td>верхня грань балки</td><td>площина настилу, від неї всі висоти</td></tr>
+    <tr><td class="id">В</td><td>ризка X = 0 на верхній грані балки</td><td>усі розміри по X – тільки від неї, ніколи від краю. Це не середина балки</td></tr>
+  </tbody>
+</table>
+
+<section class="part">
+  <div class="part-head"><span class="id">Балка</span><span>труба 60 × 60 × 3 · 1850</span><span class="qty">ризки</span><span>вид зверху</span></div>
+  <div class="draw"><svg viewBox="0 0 1060 210" role="img" aria-label="Балка 1850 з трьома вікнами: ризки X мінус 828,4, нуль і плюс 605">
+    <path class="out" d="M58 56 L983 56 L983 96 L58 96 Z"/>
+    <path class="out" d="M78 56 L98 56 L98 96 L78 96 Z"/>
+    <path class="out" d="M489.7 56 L514.7 56 L514.7 96 L489.7 96 Z"/>
+    <path class="out" d="M794.7 56 L814.7 56 L814.7 96 L794.7 96 Z"/>
+    <line class="ctr" x1="88" y1="44" x2="88" y2="152"/>
+    <line class="ctr" x1="502.2" y1="44" x2="502.2" y2="128"/>
+    <line class="ctr" x1="804.7" y1="44" x2="804.7" y2="152"/>
+    <text class="bnd" x="88" y="38" text-anchor="middle">−828,4</text>
+    <text class="bnd" x="502.2" y="38" text-anchor="middle">X = 0</text>
+    <text class="bnd" x="804.7" y="38" text-anchor="middle">+605</text>
+    <text class="note" x="58" y="112" text-anchor="start">кінець −888,4</text>
+    <text class="note" x="983" y="112" text-anchor="end">кінець +961,6</text>
+    <line class="dimline" x1="58" y1="26" x2="983" y2="26"/>
+    <line class="dimline" x1="58" y1="20" x2="58" y2="32"/>
+    <line class="dimline" x1="983" y1="20" x2="983" y2="32"/>
+    <text class="big" x="520.5" y="19" text-anchor="middle">1850</text>
+    <line class="dimline" x1="58" y1="126" x2="502.2" y2="126"/>
+    <line class="dimline" x1="58" y1="120" x2="58" y2="132"/>
+    <line class="dimline" x1="502.2" y1="120" x2="502.2" y2="132"/>
+    <text class="big" x="280.1" y="119" text-anchor="middle">888,4</text>
+    <line class="dimline" x1="58" y1="150" x2="88" y2="150"/>
+    <line class="dimline" x1="58" y1="144" x2="58" y2="156"/>
+    <line class="dimline" x1="88" y1="144" x2="88" y2="156"/>
+    <text class="big" x="73" y="143" text-anchor="middle">60</text>
+    <line class="dimline" x1="58" y1="174" x2="804.7" y2="174"/>
+    <line class="dimline" x1="58" y1="168" x2="58" y2="180"/>
+    <line class="dimline" x1="804.7" y1="168" x2="804.7" y2="180"/>
+    <text class="big" x="431.4" y="167" text-anchor="middle">1493,4</text>
+    <text class="bnd" x="520.5" y="200" text-anchor="middle">вікна вже прорізані · ризки звіряють, що балку не перевернули</text>
+  </svg></div>
+  <ul class="cond">
+    <li><b>Накернити X = 0 одразу після приймання деталей</b>, по центру вікна 50. Далі всі розміри – від цієї ризки.</li>
+    <li>Виноси 40 × 40 вставляються <b>до обварки балки</b>, не після.</li>
+  </ul>
+</section>
+
+<h2>Стик стінгера з балкою</h2>
+
+<section class="part">
+  <div class="part-head"><span class="id">Стик</span><span>стінгер крізь балку</span><span class="qty">головна геометрія</span><span>вид спереду</span></div>
+  <div class="draw"><svg viewBox="0 0 420 236" role="img" aria-label="Стінгер 50 на 50 стоїть у вікні балки, під ним 10 мм суцільної стінки">
+    <path class="out" d="M58 166 L318 166 L318 46 L238 46 L238 146 L138 146 L138 46 L58 46 Z"/>
+    <path class="plate" d="M138 46 L238 46 L238 146 L138 146 Z"/>
+    <line class="weld" x1="138" y1="48" x2="138" y2="144"/>
+    <line class="weld" x1="238" y1="48" x2="238" y2="144"/>
+    <line class="weld" x1="140" y1="146" x2="236" y2="146"/>
+    <text class="bnd" x="188" y="100" text-anchor="middle">стінгер</text>
+    <text class="note" x="188" y="118" text-anchor="middle">50 × 50 × 4</text>
+    <line class="dimline" x1="340" y1="146" x2="340" y2="166"/>
+    <line class="dimline" x1="334" y1="146" x2="346" y2="146"/>
+    <line class="dimline" x1="334" y1="166" x2="346" y2="166"/>
+    <text class="bnd" x="352" y="162" text-anchor="start">10</text>
+    <line class="dimline" x1="394" y1="46" x2="394" y2="166"/>
+    <line class="dimline" x1="388" y1="46" x2="400" y2="46"/>
+    <line class="dimline" x1="388" y1="166" x2="400" y2="166"/>
+    <text class="big" x="407" y="106" text-anchor="middle" transform="rotate(-90 407 106)">60</text>
+    <text class="note" x="52" y="50" text-anchor="end">Z 481</text>
+    <text class="note" x="52" y="150" text-anchor="end">Z 431</text>
+    <text class="note" x="52" y="170" text-anchor="end">Z 421</text>
+    <text class="bnd" x="188" y="196" text-anchor="middle">помаранчеве – шов: два бічні прогони і нижній</text>
+    <text class="note" x="188" y="216" text-anchor="middle">так на кожній стінці балки, спереду і ззаду</text>
+  </svg></div>
+  <ul class="cond">
+    <li><b>Верх стінгера і верх балки – в одній площині Z 481.</b> Верхній прогін іде саме в цій площині: розділка кромок, повний провар, <b>зачистити врівень</b> – на нього лягає дно ложа.</li>
+    <li><b>Виставити перпендикуляр по двох площинах</b>, прихопити чотири кути, переміряти, і лише тоді обварювати навхрест.</li>
+    <li>Під вікном лишається <b>10 мм</b> суцільної стінки – це найнавантаженіший переріз балки, не пропалювати.</li>
+    <li><b>Косинок немає.</b> Момент бере сам наскрізний стик: два контури обварки на плечі 57 мм.</li>
+  </ul>
+</section>
+
+<section class="part">
+  <div class="part-head"><span class="id">Стінгер</span><span>труба 50 × 50 × 4 · 816</span><span class="qty">з накладками</span><span>вид збоку</span></div>
+  <div class="draw"><svg viewBox="0 0 940 240" role="img" aria-label="Стінгер 816 з нижньою накладкою 388 і верхньою 340 від устя гнізда">
+    <path class="gh" d="M58 88 L270 88 L270 162 L58 162 Z"/>
+    <text class="note" x="164" y="80" text-anchor="middle">гніздо приймача</text>
+    <path class="out" d="M58 100 L874 100 L874 150 L58 150 Z"/>
+    <path class="out" d="M660 100 L720 100 L720 160 L660 160 Z"/>
+    <text class="note" x="690" y="176" text-anchor="middle">балка</text>
+    <path class="plate" d="M270 95 L610 95 L610 100 L270 100 Z"/>
+    <path class="plate" d="M270 150 L658 150 L658 155 L270 155 Z"/>
+    <line class="weld" x1="272" y1="93" x2="608" y2="93"/>
+    <line class="weld" x1="272" y1="102" x2="608" y2="102"/>
+    <line class="weld" x1="272" y1="148" x2="656" y2="148"/>
+    <line class="weld" x1="272" y1="157" x2="656" y2="157"/>
+    <line class="ctr" x1="270" y1="82" x2="270" y2="196"/>
+    <text class="bnd" x="270" y="76" text-anchor="middle">устя</text>
+    <line class="gh" x1="720" y1="100" x2="874" y2="100"/>
+    <line class="gh" x1="770" y1="100" x2="770" y2="72"/>
+    <text class="note" x="800" y="68" text-anchor="middle">задня полиця ложа</text>
+    <line class="dimline" x1="58" y1="212" x2="270" y2="212"/>
+    <line class="dimline" x1="58" y1="206" x2="58" y2="218"/>
+    <line class="dimline" x1="270" y1="206" x2="270" y2="218"/>
+    <text class="big" x="164" y="205" text-anchor="middle">212</text>
+    <line class="dimline" x1="270" y1="212" x2="660" y2="212"/>
+    <line class="dimline" x1="660" y1="206" x2="660" y2="218"/>
+    <text class="big" x="465" y="205" text-anchor="middle">390</text>
+    <line class="dimline" x1="660" y1="212" x2="720" y2="212"/>
+    <line class="dimline" x1="720" y1="206" x2="720" y2="218"/>
+    <text class="big" x="690" y="205" text-anchor="middle">60</text>
+    <line class="dimline" x1="720" y1="212" x2="770" y2="212"/>
+    <line class="dimline" x1="770" y1="206" x2="770" y2="218"/>
+    <text class="big" x="745" y="205" text-anchor="middle">50</text>
+    <line class="dimline" x1="770" y1="212" x2="874" y2="212"/>
+    <line class="dimline" x1="874" y1="206" x2="874" y2="218"/>
+    <text class="big" x="822" y="205" text-anchor="middle">104</text>
+    <line class="dimline" x1="270" y1="42" x2="610" y2="42"/>
+    <line class="dimline" x1="270" y1="36" x2="270" y2="48"/>
+    <line class="dimline" x1="610" y1="36" x2="610" y2="48"/>
+    <text class="bnd" x="440" y="35" text-anchor="middle">верхня накладка 340</text>
+    <line class="dimline" x1="270" y1="234" x2="658" y2="234"/>
+    <line class="dimline" x1="270" y1="228" x2="270" y2="240"/>
+    <line class="dimline" x1="658" y1="228" x2="658" y2="240"/>
+    <text class="bnd" x="464" y="232" text-anchor="middle">нижня накладка 388</text>
+  </svg></div>
+  <ul class="cond">
+    <li><b>Накладки різні:</b> нижня 388 доходить до балки, верхня 340 упирається в передню стінку ложа. Обидві з листа 5, ширина 50 – врівень із гранями труби.</li>
+    <li><b>Обидві починаються рівно на усті гнізда</b> і всередину гнізда не заходять ні на міліметр: там зазор між трубою 50 і гніздом 52 всього по 1 мм на сторону.</li>
+    <li><b>Поперечних швів на торцях накладок немає</b> – ні на усті, ні на дальньому кінці. Тільки поздовжні, по два на пластину, суцільно.</li>
+    <li>Труба гнута, кути радіусні: пластина лягає на плоску середину ≈30 мм, решту катета добирає радіус.</li>
+  </ul>
+</section>
+
+<h2>Шви</h2>
+<table class="list">
+  <thead><tr><th>Стик</th><th>Шов</th><th>Умова</th></tr></thead>
+  <tbody>
+    <tr><td class="id">Стінгер / балка, верх</td><td>розділка кромок, повний провар</td><td>зачистити врівень: на цю площину лягає дно ложа</td></tr>
+    <tr><td class="id">Стінгер / балка, боки і низ</td><td>кутовий валик по контуру вікна</td><td>три відкриті прогони на кожній стінці, спереду і ззаду</td></tr>
+    <tr><td class="id">Накладки стінгера</td><td>по два поздовжні кутові вздовж довгих кромок</td><td>суцільно на всю довжину. Поперечних на торцях немає</td></tr>
+    <tr><td class="id">Ложе на балку</td><td>кутовий валик по стику з дном ложа, з обох боків</td><td>зворотно-ступінчасто 40–50 мм, від центру до країв. Пробкових швів немає</td></tr>
+    <tr><td class="id">Виноси в балку</td><td>по контуру в обох стінках</td><td>вставляти до обварки балки</td></tr>
+    <tr><td class="id">Заглушки, усі чотири</td><td>кутовий, кладеться вже в ніші, <b>катет 4</b></td><td>утоплені на 6 мм, верх валика на 2 мм нижче торця</td></tr>
+    <tr><td class="id">Черевик</td><td>поперечний по згину плюс 6 пробкових ⌀12 через дно</td><td>тільки після примірки з колесом</td></tr>
+    <tr><td class="id">Вушка стяжок</td><td>кутові на торцях виносів</td><td>дрібні шви, геометрію вже не рушать</td></tr>
+  </tbody>
+</table>
+
+<div class="legend">
+  <span><b>Катети, крім ніш заглушок, у проєкті не задані.</b> У розрахунку кутовий валик катетом 3 завдовжки 3,4 м дає 1 142 кН</span>
+  <span>Остаточний катет – за тоншою деталлю. Найтонше в блоці: <b>ложе 2 мм</b>, балка 3 мм</span>
+</div>
+
+<h2>Порядок</h2>
+<table class="step">
+  <thead><tr><th class="n">#</th><th>Крок</th></tr></thead>
+  <tbody>
+    <tr><td class="n">1</td><td>Приймання деталей, зняти задирки. <b>Фаска 2–3 мм по торцю хвоста стінгера</b> – без неї він чіпляє внутрішній шов гнізда.</td></tr>
+    <tr><td class="n">2</td><td>Ризки на балці: <b>X = 0</b>, −828,4 і +605. Накернити, поки нічого не заважає.</td></tr>
+    <tr><td class="n">3</td><td>Восковий консервант у порожнини балки й стінгера, тоді заглушки: балка 53 × 53, стінгер 41 × 41, усі втоплені на 6 мм. Дренажних отворів не треба – іде порошкова фарба, не ванна.</td></tr>
+    <tr><td class="n">4</td><td><b>Стінгер до балки.</b> Перпендикуляр по двох площинах, прихопити 4 кути, переміряти, обварити навхрест.</td></tr>
+    <tr><td class="n">5</td><td>Порожній: косинки скасовані. Нумерація збережена, щоб збігалася з конструкцією.</td></tr>
+    <tr><td class="n">6</td><td><b>Примірка в реальне гніздо.</b> Балка фаркопа лежить у гаражі – міряти можна на верстаку. Після цього кроку геометрію стінгера не чіпаємо.</td></tr>
+    <tr><td class="n">7</td><td>Свердлити отвір під палець <b>⌀17</b> з реального положення. Приварити скобу анти-люфту, що охоплює гніздо знизу.</td></tr>
+    <tr><td class="n">8</td><td>Перевірити прямизну ложа по шнурці.</td></tr>
+    <tr><td class="n">9</td><td><b>Ложе на балку.</b> Валик з обох боків, зворотно-ступінчасто, від центру до країв.</td></tr>
+    <tr><td class="n">10</td><td><b>Черевик</b> окремим вузлом: дно Д3 (згин 50°) плюс дві стінки Д4 (згин 9,1°). Тоді на ложе – прихопити, закотити колесо, перевірити перекіс, обварити.</td></tr>
+    <tr><td class="n">11</td><td>Вушка стяжок на виносах, проушина, скоби підвісу рампи.</td></tr>
+    <tr><td class="n">12</td><td>Рамка окремим виробом на столі. Кронштейн мами приварити по місцю, надівши маму на готовий стуб.</td></tr>
+    <tr><td class="n">13</td><td>Пруток рампи – аж після примірки купленої рампи. Місце ще не вибране.</td></tr>
+    <tr><td class="n">14</td><td><b>Контроль:</b> прямизна балки по шнурці, площина настилу по правилу, стінгер у гнізді без закусування. Правити зараз, не після фарбування.</td></tr>
+    <tr><td class="n">15</td><td>Порошкова фарба. Різьби нарізати після неї, хвіст стінгера приміряти в гніздо вже пофарбованим.</td></tr>
+  </tbody>
+</table>
+
+<section class="part stop">
+  <div class="part-head"><span class="id">СТОП</span><span>чого не робити</span></div>
+  <ul class="cond">
+    <li><b>Косинок під стінгер немає</b> – скасовані, момент бере наскрізний стик.</li>
+    <li><b>Пробкових швів по ложу немає.</b> Шість пробкових ⌀12 лишились тільки через дно черевика.</li>
+    <li><b>Поперечних швів на торцях накладок немає</b> – це концентратор у найгіршому перерізі.</li>
+    <li><b>Довгих суцільних валиків з одного боку немає.</b> Тільки 40–50 мм і навперемін.</li>
+    <li><b>Не гасити водою і не правити холодним молотком.</b> Правка – місцевим нагрівом плями 20–30 мм на опуклому боці.</li>
+    <li>Нижче +5 °C зону шва підігріти до 100–150 °C.</li>
+  </ul>
+</section>
+
+</div>
