@@ -76,6 +76,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
       <button type="button" data-view="top" aria-pressed="false">згори</button>
       <button type="button" data-view="node" aria-pressed="false">вузол</button>
     </div>
+    <label class="vtog"><input type="checkbox" id="t-weld"> розміри зварнику</label>
     <label class="vtog"><input type="checkbox" id="t-exp"> рознести</label>
     <label class="vtog"><input type="checkbox" id="t-bike"> мотоцикл</label>
     <label class="vtog"><input type="checkbox" id="t-car"> машина</label>
@@ -1844,7 +1845,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
 
   var cv=document.getElementById('m3d'); if(!cv) return;
   var ctx=cv.getContext('2d');
-  var st={ yaw:38*D2R, pitch:34*D2R, explode:false, zoom:false, step:4, bike:false, car:false, ramp:false, rampDown:false, wheels:false, frameOn:false, cases:false, solo:false };
+  var st={ yaw:38*D2R, pitch:34*D2R, explode:false, zoom:false, step:4, weld:false, bike:false, car:false, ramp:false, rampDown:false, wheels:false, frameOn:false, cases:false, solo:false };
   var buf=null, img=null, out=null;
 
   function bgColor() {
@@ -1867,12 +1868,35 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
 
   // Розмірні лінії поверх кадру. Вмикаються разом із макетом мотоцикла; у вигляді
   // «вузол» не малюються, бо там мотоцикл обрізаний вікном.
+
+  // 🔴 Розміри для зварника, 2026-08-28. Тільки те, що не випливає само з посадки
+  // деталей у вікна: прив'язки по довжині, виліт стінгера, положення накладок,
+  // черевика і каналу скоб. Решта стиків самобазується.
+  function weldDims() {
+    var MOUTH = -129.75, FRONT = 260, BACK = 320, TOPZ = 481;
+    return [
+      { a:[-888.4, 400, 380], b:[961.6, 400, 380], t:'1 850 балка' },
+      { a:[-888.4, 400, 340], b:[0, 400, 340],     t:'888,4 до осі стінгера' },
+      { a:[-888.4, 400, 300], b:[605, 400, 300],   t:'1 493,4 до другого виносу' },
+      { a:[-888.4, 400, 260], b:[-828.4, 400, 260], t:'60' },
+      { a:[0, MOUTH, 520], b:[0, FRONT, 520],      t:'390 виліт до устя' },
+      { a:[0, 370, 520],    b:[0, 474, 520],       t:'104 стуб під маму' },
+      { a:[0, MOUTH, 492],  b:[0, 210.25, 492],    t:'340 верхня накладка' },
+      { a:[0, MOUTH, 418],  b:[0, 258.25, 418],    t:'388 нижня накладка' },
+      { a:[-40, 400, TOPZ], b:[-40, 400, 431],     t:'50' },
+      { a:[-888, 190, 600], b:[-625, 190, 600],    t:'263 черевик до згину' },
+      { a:[-828.4, 205, 330], b:[-828.4, 375, 330], t:'170 канал скоби' }
+    ];
+  }
   function dims(F, dpr) {
-    if (!st.bike || st.zoom) return;
+    if (st.zoom) return;
+    if (!st.bike && !st.weld) return;
     var cs = getComputedStyle(document.documentElement);
     var ink = (cs.getPropertyValue('--ink') || '').trim() || '#15181C';
     var surf = (cs.getPropertyValue('--surface') || '').trim() || '#F8F9FA';
-    var D = bikeDims(st.explode ? LIFT : 0), i, A, B, dx, dy, L, ux, uy, mx, my, w;
+    var D = [], i, A, B, dx, dy, L, ux, uy, mx, my, w;
+    if (st.bike) D = D.concat(bikeDims(st.explode ? LIFT : 0));
+    if (st.weld) D = D.concat(weldDims());
     function scr(p){ var q = F.K.pr(p, CENTER); return [q[0]*F.s+F.ox, q[1]*F.s+F.oy]; }
     function head(x, y, ux, uy) {
       var k = 8*dpr, o = 3.2*dpr;
@@ -1931,6 +1955,8 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
   Array.prototype.forEach.call(document.querySelectorAll('.vgroup [data-step]'),function(b){
     b.addEventListener('click',function(){ pressOnly('.vgroup [data-step]', b); st.step=+b.dataset.step; applyStep(); draw(); });
   });
+  var tw=document.getElementById('t-weld');
+  if(tw) tw.addEventListener('change',function(){ st.weld=tw.checked; draw(); });
   var te=document.getElementById('t-exp');
   if(te) te.addEventListener('change',function(){ st.explode=te.checked; draw(); });
   var td=document.getElementById('t-rdown');
