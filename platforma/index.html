@@ -76,6 +76,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
       <button type="button" class="wbtn" data-wd="st" aria-pressed="false">стінгер</button>
       <button type="button" class="wbtn" data-wd="lz" aria-pressed="false">швелер</button>
       <button type="button" class="wbtn" data-wd="ch" aria-pressed="false">черевик</button>
+      <button type="button" class="wbtn" data-wd="bx" aria-pressed="false">ящики</button>
     </div>
     <div class="vgroup" role="group" aria-label="Вигляд">
       <button type="button" data-view="iso" aria-pressed="true">3/4</button>
@@ -84,6 +85,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
       <button type="button" data-view="top" aria-pressed="false">згори</button>
       <button type="button" data-view="node" aria-pressed="false">вузол</button>
     </div>
+    <label class="vtog"><input type="checkbox" id="t-boxes"> два ящики</label>
     <label class="vtog"><input type="checkbox" id="t-bike"> мотоцикл</label>
     <label class="vtog"><input type="checkbox" id="t-car"> машина</label>
     <label class="vtog"><input type="checkbox" id="t-ramp"> рампа складена</label>
@@ -1719,6 +1721,15 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
     }
   }
 
+
+  // 🔴 Два патронні ящики NATO 12,7 (280 x 180 x 140), 2026-08-29. Стоять у просвіті
+  // між бампером і передньою стінкою ложа, по одному з кожного боку стінгера.
+  // Низ на Z 330 – це 300 над землею, тобто не нижче за найнижчу точку блока.
+  function ammoBoxes(P) {
+    var Y0 = 70, Y1 = 210, Z0 = 330, Z1 = 510, C = COL.tow;
+    box(P, 60, Y0, Z0, 340, Y1, Z1, C, '');
+    box(P, -340, Y0, Z0, -60, Y1, Z1, C, '');
+  }
   function scene(opt) {
     var P = [];
     NOSKIP = !!opt.ref;
@@ -1744,6 +1755,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
     if (opt.frameOn && opt.step >= 4) caseFrame(P, opt);
     if (opt.cases && opt.step >= 4) cases(P, opt);
     if (opt.rampDown && opt.step >= 2 && !opt.explode) rampDown(P, opt);
+    if (opt.boxes) ammoBoxes(P);
     if (opt.bike) bike(P, opt);
     if (opt.step >= 4 && opt.bike && !opt.zoom) straps(P, opt);
     NOSKIP = false;
@@ -1851,7 +1863,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
 
   var cv=document.getElementById('m3d'); if(!cv) return;
   var ctx=cv.getContext('2d');
-  var st={ yaw:38*D2R, pitch:34*D2R, explode:false, zoom:false, step:4, wd:{beam:0,out:0,st:0,lz:0,ch:0}, bike:false, car:false, ramp:false, rampDown:false, wheels:false, frameOn:false, cases:false, solo:false };
+  var st={ yaw:38*D2R, pitch:34*D2R, explode:false, zoom:false, step:4, boxes:false, wd:{beam:0,out:0,st:0,lz:0,ch:0,bx:0}, bike:false, car:false, ramp:false, rampDown:false, wheels:false, frameOn:false, cases:false, solo:false };
   var buf=null, img=null, out=null;
 
   function bgColor() {
@@ -1908,6 +1920,11 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
       { g:'lz', a:[520, 212, 560], b:[520, 368, 560], t:'156 канал', w:1 },
       { g:'lz', a:[961.6, 430, 481], b:[961.6, 430, 541], t:'60 полиця', w:1 },
       { g:'lz', a:[-888.4, 470, 481], b:[961.6, 470, 481], t:'1 850, торці врівень із балкою', w:1 },
+      // ---- ящики ----
+      { g:'bx', a:[200, 70, 540], b:[200, 210, 540],  t:'140 ящик', w:1 },
+      { g:'bx', a:[200, 90.25, 570], b:[200, 210, 570], t:'120 просвіт – бракує 20', w:1 },
+      { g:'bx', a:[60, 140, 300],  b:[340, 140, 300],  t:'280 ящик', w:1 },
+      { g:'bx', a:[420, 140, 330], b:[420, 140, 510],  t:'180', w:1 },
       // ---- черевик і скоба ----
       { g:'ch', a:[-888, 170, 610], b:[-625, 170, 610],     t:'263 черевик до згину', w:1 },
       { g:'ch', a:[-888.4, 170, 700], b:[-625, 170, 700],   t:'задній торець на X −625', w:1 },
@@ -1916,7 +1933,7 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
   }
   function dims(F, dpr) {
     if (st.zoom) return;
-    var anyW = st.wd.beam||st.wd.out||st.wd.st||st.wd.lz||st.wd.ch;
+    var anyW = st.wd.beam||st.wd.out||st.wd.st||st.wd.lz||st.wd.ch||st.wd.bx;
     if (!st.bike && !anyW) return;
     var cs = getComputedStyle(document.documentElement);
     var ink = (cs.getPropertyValue('--ink') || '').trim() || '#15181C';
@@ -1986,6 +2003,8 @@ button:focus-visible, input:focus-visible { outline:2px solid var(--accent); out
   Array.prototype.forEach.call(document.querySelectorAll('.vgroup [data-step]'),function(b){
     b.addEventListener('click',function(){ pressOnly('.vgroup [data-step]', b); st.step=+b.dataset.step; applyStep(); draw(); });
   });
+  var tbx=document.getElementById('t-boxes');
+  if(tbx) tbx.addEventListener('change',function(){ st.boxes=tbx.checked; draw(); });
   Array.prototype.forEach.call(document.querySelectorAll('[data-wd]'),function(b){
     b.addEventListener('click',function(){
       var k=b.dataset.wd; st.wd[k]=!st.wd[k];
